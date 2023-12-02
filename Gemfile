@@ -10,4 +10,5 @@ group :development, :test do
   gem 'rubocop'
 
   gem 'minitest', '~> 5.0'
+  gem 'rspec'
 end
