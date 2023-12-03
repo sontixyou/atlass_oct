@@ -16,5 +16,9 @@ module AtlassOct
       converted_jira_content = converted_jira_content.gsub(/^h5\. /, '##### ')
       converted_jira_content.gsub(/^h6\. /, '###### ')
     end
+
+    def self.convert_strong(jira_content)
+      jira_content.gsub(/\*{1}(.+?)\*{1}/, '**\1**')
+    end
   end
 end

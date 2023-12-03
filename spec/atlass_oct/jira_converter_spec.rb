@@ -41,4 +41,38 @@ RSpec.describe AtlassOct::JiraConverter do
       it { expect(described_class.convert_headings(content)).to eq('###### Heading 6') }
     end
   end
+
+  describe '#convert_strong' do
+    context 'when content has strong' do
+      let!(:content) { '*strong*' }
+
+      it { expect(described_class.convert_strong(content)).to eq('**strong**') }
+    end
+
+    context 'when content has strong with *' do
+      context 'when content has strong with * of head' do
+        let!(:content) { '**strong*' }
+
+        it { expect(described_class.convert_strong(content)).to eq('***strong**') }
+      end
+
+      context 'when content has strong with * of end' do
+        let!(:content) { '*strong**' }
+
+        it { expect(described_class.convert_strong(content)).to eq('**strong***') }
+      end
+
+      context 'when content has strong with * of end' do
+        let!(:content) { '***' }
+
+        it { expect(described_class.convert_strong(content)).to eq('*****') }
+      end
+    end
+
+    context 'when content has strongs' do
+      let!(:content) { '*strong* *strong*' }
+
+      it { expect(described_class.convert_strong(content)).to eq('**strong** **strong**') }
+    end
+  end
 end
