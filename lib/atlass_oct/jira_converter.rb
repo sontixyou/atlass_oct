@@ -20,5 +20,9 @@ module AtlassOct
     def self.convert_strong(jira_content)
       jira_content.gsub(/\*{1}(.+?)\*{1}/, '**\1**')
     end
+
+    def self.convert_emphasis(jira_content)
+      jira_content.gsub(/_(.+?)__/, '*\1_*').gsub(/_{1}(.+?)_{1}/, '*\1*')
+    end
   end
 end

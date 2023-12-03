@@ -75,4 +75,38 @@ RSpec.describe AtlassOct::JiraConverter do
       it { expect(described_class.convert_strong(content)).to eq('**strong** **strong**') }
     end
   end
+
+  describe '#convert_emphasis' do
+    context 'when content has emphasis' do
+      let!(:content) { '_emphasis_' }
+
+      it { expect(described_class.convert_emphasis(content)).to eq('*emphasis*') }
+    end
+
+    context 'when content has emphasis with _' do
+      context 'when content has emphasis with _ of head' do
+        let!(:content) { '__emphasis_' }
+
+        it { expect(described_class.convert_emphasis(content)).to eq('*_emphasis*') }
+      end
+
+      context 'when content has emphasis with _ of end' do
+        let!(:content) { '_emphasis__' }
+
+        it { expect(described_class.convert_emphasis(content)).to eq('*emphasis_*') }
+      end
+
+      context 'when content has emphasis with _' do
+        let!(:content) { '___' }
+
+        it { expect(described_class.convert_emphasis(content)).to eq('*_*') }
+      end
+
+      context 'when content __' do
+        let!(:content) { '__' }
+
+        it { expect(described_class.convert_emphasis(content)).to eq('__') }
+      end
+    end
+  end
 end
