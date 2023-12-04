@@ -144,4 +144,38 @@ RSpec.describe AtlassOct::JiraConverter do
       end
     end
   end
+
+  describe '#convert_deleted' do
+    context 'when content has deleted' do
+      let!(:content) { '-deleted-' }
+
+      it { expect(described_class.convert_deleted(content)).to eq('~~deleted~~') }
+    end
+
+    context 'when content has deleted with -' do
+      context 'when content has deleted with - of head' do
+        let!(:content) { '--deleted-' }
+
+        it { expect(described_class.convert_deleted(content)).to eq('~~-deleted~~') }
+      end
+
+      context 'when content has deleted with - of end' do
+        let!(:content) { '-deleted--' }
+
+        it { expect(described_class.convert_deleted(content)).to eq('~~deleted-~~') }
+      end
+
+      context 'when content has deleted with -' do
+        let!(:content) { '~~~' }
+
+        it { expect(described_class.convert_deleted(content)).to eq('~~~~') }
+      end
+
+      context 'when content --' do
+        let!(:content) { '--' }
+
+        it { expect(described_class.convert_deleted(content)).to eq('--') }
+      end
+    end
+  end
 end
