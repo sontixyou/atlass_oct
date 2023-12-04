@@ -7,7 +7,6 @@ RSpec.describe AtlassOct::JiraConverter do
     context 'when content has h1 headings' do
       let!(:content) { 'h1. Heading 1' }
 
-      # binding.break
       it { expect(described_class.convert_headings(content)).to eq('# Heading 1') }
     end
 
@@ -39,6 +38,42 @@ RSpec.describe AtlassOct::JiraConverter do
       let!(:content) { 'h6. Heading 6' }
 
       it { expect(described_class.convert_headings(content)).to eq('###### Heading 6') }
+    end
+
+    context 'when content head is not h1 headings' do
+      let!(:content) { 'hoge h1.' }
+
+      it { expect(described_class.convert_headings(content)).to eq('hoge h1.') }
+    end
+
+    context 'when content head is not h2 headings' do
+      let!(:content) { 'hoge h2.' }
+
+      it { expect(described_class.convert_headings(content)).to eq('hoge h2.') }
+    end
+
+    context 'when content head is not h3 headings' do
+      let!(:content) { 'hoge h3.' }
+
+      it { expect(described_class.convert_headings(content)).to eq('hoge h3.') }
+    end
+
+    context 'when content head is not h4 headings' do
+      let!(:content) { 'hoge h4.' }
+
+      it { expect(described_class.convert_headings(content)).to eq('hoge h4.') }
+    end
+
+    context 'when content head is not h5 headings' do
+      let!(:content) { 'hoge h5.' }
+
+      it { expect(described_class.convert_headings(content)).to eq('hoge h5.') }
+    end
+
+    context 'when content head is not h6 headings' do
+      let!(:content) { 'hoge h6.' }
+
+      it { expect(described_class.convert_headings(content)).to eq('hoge h6.') }
     end
   end
 
